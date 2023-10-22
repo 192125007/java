@@ -1,0 +1,65 @@
+//attendance management system
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+class AttendanceManager {
+    private Map<String, Boolean> studentAttendance;
+
+    public AttendanceManager() {
+        studentAttendance = new HashMap<>();
+    }
+
+    public void markAttendance(String studentName, boolean isPresent) {
+        studentAttendance.put(studentName, isPresent);
+    }
+
+    public void displayAttendance() {
+        System.out.println("Attendance Report:");
+        for (Map.Entry<String, Boolean> entry : studentAttendance.entrySet()) {
+            String studentName = entry.getKey();
+            String attendanceStatus = entry.getValue() ? "Present" : "Absent";
+            System.out.println(studentName + ": " + attendanceStatus);
+        }
+    }
+}
+
+public class AttendanceManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        AttendanceManager attendanceManager = new AttendanceManager();
+
+        boolean isRunning = true;
+
+        while (isRunning) {
+            System.out.println("\nAttendance Management System Menu:");
+            System.out.println("1. Mark Attendance");
+            System.out.println("2. Display Attendance");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter student name: ");
+                    String studentName = scanner.nextLine();
+                    System.out.print("Is the student present? (true/false): ");
+                    boolean isPresent = scanner.nextBoolean();
+                    attendanceManager.markAttendance(studentName, isPresent);
+                    break;
+                case 2:
+                    attendanceManager.displayAttendance();
+                    break;
+                case 3:
+                    isRunning = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+
+        System.out.println("Attendance Management System has been terminated.");
+    }
+}
